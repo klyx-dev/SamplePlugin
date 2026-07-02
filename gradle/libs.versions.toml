@@ -1,0 +1,15 @@
+[versions]
+# agp and kotlin version must match with klyx app's agp and kotlin version
+agp = "9.2.1"
+kotlin = "2.4.0"
+klyx = "4.2.0"
+klyx-snapshot = "4.2.0-SNAPSHOT"
+
+[libraries]
+klyx-api = { module = "io.github.klyx-dev:klyx-api", version.ref = "klyx-snapshot" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+klyx = { id = "io.github.klyx-dev.plugin", version.ref = "klyx-snapshot" }
