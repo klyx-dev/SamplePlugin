@@ -76,15 +76,15 @@ dependencies {
 
     // klyx-api transitively exposes (via api() configuration):
     //   - Compose BOM + Compose UI
-    //   - Material Icons Extended
-    //   - Koin (koin-core + koin-android)
     //   - kotlinx.serialization.json
     //   - kotlinx.coroutines.core
     //   - kotlinx.collections.immutable
     //   - androidx.documentfile
     //   - androidx.lifecycle.runtime.ktx
-    //   - utilcodex (blankj)
     // These are available at compile time via compileOnly.
+
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.material.icons.extended)
 }
 
 // remove this for release builds if not using SNAPSHOT version of klyx-api

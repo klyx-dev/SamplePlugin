@@ -4,9 +4,12 @@ agp = "9.2.1"
 kotlin = "2.4.0"
 klyx = "4.2.0"
 klyx-snapshot = "4.2.0-SNAPSHOT"
+compose-bom = "2026.06.01"
 
 [libraries]
 klyx-api = { module = "io.github.klyx-dev:klyx-api", version.ref = "klyx-snapshot" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+androidx-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
