@@ -1,6 +1,6 @@
-# Klyx Plugin Template
+# Klyx Sample Plugin
 
-A starting point for creating plugins for klyx.
+A reference implementation that demonstrates every feature of the Klyx Plugin API (klyx-api).
 
 ## Build Tasks
 
