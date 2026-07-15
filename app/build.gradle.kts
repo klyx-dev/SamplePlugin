@@ -42,10 +42,12 @@ klyx {
     //   2. sets android.buildFeatures.compose = true
     // This is REQUIRED if you use @Composable in your plugin.
     enableCompose()
+
+    autoPushToDevice = false
 }
 
 android {
-    namespace = "com.klyx.sampleplugin"
+    namespace = "com.klyx.plugin.template"
 
     compileSdk {
         version = release(37)
@@ -82,9 +84,6 @@ dependencies {
     //   - androidx.documentfile
     //   - androidx.lifecycle.runtime.ktx
     // These are available at compile time via compileOnly.
-
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.material.icons.extended)
 }
 
 // remove this for release builds if not using SNAPSHOT version of klyx-api
