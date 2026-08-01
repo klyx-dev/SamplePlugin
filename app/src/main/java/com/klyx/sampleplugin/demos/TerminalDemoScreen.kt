@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,6 +31,7 @@ import com.klyx.api.system.outputText
 import com.klyx.api.terminal.processEnv
 import com.klyx.api.terminal.terminalArgs
 import com.klyx.api.terminal.terminalEnv
+import com.klyx.sampleplugin.icons.ArrowBack
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -73,9 +72,9 @@ fun TerminalDemoScreen(terminalManager: TerminalManager) {
             "Terminal service bound: ${terminalManager.sessionBinder.isServiceBound.value}"
         },
         TermDemo("Execute command in terminal env") {
-            command("bash", "-c", "echo TERM=\$TERM && echo SHELL=\$SHELL")
+            command("bash", "-c", $$"echo TERM=$TERM && echo SHELL=$SHELL")
                 .env(terminalEnv())
-                .outputText()
+                .output().stdoutText
         },
     )
 
@@ -85,7 +84,7 @@ fun TerminalDemoScreen(terminalManager: TerminalManager) {
                 title = { Text("Terminal Sessions API") },
                 navigationIcon = {
                     IconButton(onClick = {}) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(ArrowBack, contentDescription = "Back")
                     }
                 },
             )

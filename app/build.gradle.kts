@@ -67,27 +67,3 @@ android {
     //   compileOptions.sourceCompatibility = JavaVersion.VERSION_21
     //   compileOptions.targetCompatibility = JavaVersion.VERSION_21
 }
-
-dependencies {
-    // klyx-api is the library providing ALL the APIs demonstrated below.
-    // It is added as compileOnly because the Klyx app itself
-    // provides the API at runtime.
-    compileOnly(libs.klyx.api)
-
-    // klyx-api transitively exposes (via api() configuration):
-    //   - Compose BOM + Compose UI
-    //   - kotlinx.serialization.json
-    //   - kotlinx.coroutines.core
-    //   - kotlinx.collections.immutable
-    //   - androidx.documentfile
-    //   - androidx.lifecycle.runtime.ktx
-    // These are available at compile time via compileOnly.
-
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.material.icons.extended)
-}
-
-// remove this for release builds if not using SNAPSHOT version of klyx-api
-configurations.all {
-    resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
-}

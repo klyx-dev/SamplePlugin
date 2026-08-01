@@ -1,14 +1,5 @@
 package com.klyx.sampleplugin
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.EventNote
-import androidx.compose.material.icons.outlined.Android
-import androidx.compose.material.icons.outlined.Code
-import androidx.compose.material.icons.outlined.Description
-import androidx.compose.material.icons.outlined.Folder
-import androidx.compose.material.icons.outlined.Palette
-import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material.icons.outlined.Terminal
 import com.klyx.api.NavDestination
 import com.klyx.api.Navigator
 import com.klyx.api.data.editor.FileOpenRequest
@@ -22,8 +13,11 @@ import com.klyx.api.event.editor.FileOpenedEvent
 import com.klyx.api.event.eventBus
 import com.klyx.api.event.terminal.NewSessionEvent
 import com.klyx.api.event.terminal.TerminateAllSessionEvent
+import com.klyx.api.plugin.Author
 import com.klyx.api.plugin.KlyxPlugin
+import com.klyx.api.plugin.Links
 import com.klyx.api.plugin.PluginInfo
+import com.klyx.api.plugin.PluginManifest
 import com.klyx.api.plugin.currentLifecycleOwner
 import com.klyx.api.plugin.currentPluginContext
 import com.klyx.api.plugin.plugin
@@ -41,11 +35,17 @@ import com.klyx.api.ui.ToolbarRegistry
 import com.klyx.api.ui.toastHostState
 import com.klyx.sampleplugin.demos.EditorDemoScreen
 import com.klyx.sampleplugin.demos.EventDemoScreen
-import com.klyx.sampleplugin.demos.FileSystemDemoScreen
 import com.klyx.sampleplugin.demos.ProcessDemoScreen
 import com.klyx.sampleplugin.demos.ServiceDemoScreen
 import com.klyx.sampleplugin.demos.TerminalDemoScreen
 import com.klyx.sampleplugin.demos.UtilityDemoScreen
+import com.klyx.sampleplugin.icons.Android
+import com.klyx.sampleplugin.icons.DeployedCode
+import com.klyx.sampleplugin.icons.Description
+import com.klyx.sampleplugin.icons.EventNote
+import com.klyx.sampleplugin.icons.Palette
+import com.klyx.sampleplugin.icons.Settings
+import com.klyx.sampleplugin.icons.Terminal
 import com.klyx.sampleplugin.ui.FeatureItem
 import com.klyx.sampleplugin.ui.MainDemoScreen
 import kotlinx.coroutines.launch
@@ -53,34 +53,42 @@ import kotlinx.coroutines.launch
 private val features = listOf(
     FeatureItem(
         id = "process", label = "Process Execution",
-        icon = Icons.Outlined.Code, screenId = ScreenId("demo.process"),
-    ),
-    FeatureItem(
-        id = "filesystem", label = "File System",
-        icon = Icons.Outlined.Folder, screenId = ScreenId("demo.filesystem"),
+        icon = DeployedCode, screenId = ScreenId("demo.process"),
     ),
     FeatureItem(
         id = "editor", label = "Editor & Tabs",
-        icon = Icons.Outlined.Description, screenId = ScreenId("demo.editor"),
+        icon = Description, screenId = ScreenId("demo.editor"),
     ),
     FeatureItem(
         id = "services", label = "Services & Settings",
-        icon = Icons.Outlined.Settings, screenId = ScreenId("demo.services"),
+        icon = Settings, screenId = ScreenId("demo.services"),
     ),
     FeatureItem(
         id = "terminal", label = "Terminal Sessions",
-        icon = Icons.Outlined.Terminal, screenId = ScreenId("demo.terminal"),
+        icon = Terminal, screenId = ScreenId("demo.terminal"),
     ),
     FeatureItem(
         id = "events", label = "Event System",
-        icon = Icons.AutoMirrored.Outlined.EventNote, screenId = ScreenId("demo.events"),
+        icon = EventNote, screenId = ScreenId("demo.events"),
     ),
     FeatureItem(
         id = "utility", label = "Utilities & Theme",
-        icon = Icons.Outlined.Palette, screenId = ScreenId("demo.utility"),
+        icon = Palette, screenId = ScreenId("demo.utility"),
     ),
 )
 
+@PluginManifest(
+    id = "com.klyx.sampleplugin",
+    name = "Sample Plugin",
+    description = "A comprehensive reference implementation demonstrating every feature of the Klyx Plugin API. Covers: plugin lifecycle, navigation, system/process execution, terminal sessions, file system, editor tabs, settings, fonts, events, screen registry, toolbar, toast, theme/colors, platform architecture, and utilities.",
+    icon = "icon.png",
+    author = Author(name = "Klyx"),
+    license = "MIT",
+    links = Links(
+        source = "https://github.com/klyx-dev/SamplePlugin",
+        issues = "https://github.com/klyx-dev/SamplePlugin/issues"
+    )
+)
 class SamplePlugin : KlyxPlugin {
 
     private val screens: ScreenRegistry by plugin()
@@ -124,9 +132,8 @@ class SamplePlugin : KlyxPlugin {
                 return WorkspaceTab.Custom(
                     title = request.fileName,
                     id = request.uri.toString(),
-                ) {
-                    EditorDemoScreen(fileName = request.fileName)
-                }
+                    content = { EditorDemoScreen(fileName = request.fileName) }
+                )
             }
         })
 
@@ -167,7 +174,6 @@ class SamplePlugin : KlyxPlugin {
         }
 
         screens[ScreenId("demo.process")] = { ProcessDemoScreen(fileSystem) }
-        screens[ScreenId("demo.filesystem")] = { FileSystemDemoScreen(fileSystem) }
         screens[ScreenId("demo.editor")] = { EditorDemoScreen() }
         screens[ScreenId("demo.services")] = { ServiceDemoScreen(settings) }
         screens[ScreenId("demo.terminal")] = { TerminalDemoScreen(terminalManager) }
@@ -182,7 +188,7 @@ class SamplePlugin : KlyxPlugin {
             ToolbarAction(
                 id = "demo.show_main",
                 label = "SamplePlugin: Feature Demos",
-                icon = ToolbarIcon(Icons.Outlined.Android),
+                icon = ToolbarIcon(Android),
                 category = cat,
                 priority = 100,
                 onClick = {

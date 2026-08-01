@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.klyx.api.data.fs.FileSystem
+import com.klyx.api.system.Command
 import com.klyx.api.system.command
 import com.klyx.api.system.commandExists
 import com.klyx.api.system.firstAvailable
@@ -35,6 +34,7 @@ import com.klyx.api.system.isSuccess
 import com.klyx.api.system.outputText
 import com.klyx.api.system.shell
 import com.klyx.api.system.which
+import com.klyx.sampleplugin.icons.ArrowBack
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,10 +45,10 @@ fun ProcessDemoScreen(fileSystem: FileSystem) {
 
     val demos = listOf(
         ProcessDemo("Run command: echo") {
-            command("echo").args("Hello", "from", "Klyx", "Plugin!").outputText()
+            command("echo").args("Hello", "from", "Klyx", "Plugin!").output().stdoutText
         },
         ProcessDemo("Shell: ls -la") {
-            shell("ls -la /data/data/com.klyx").outputText()
+            Command.shell("ls -la /data/data/com.klyx").output().stdoutText
         },
         ProcessDemo("commandExists: bash") {
             "bash exists: ${commandExists("bash")}"
@@ -63,7 +63,7 @@ fun ProcessDemoScreen(fileSystem: FileSystem) {
             "python3 path: ${which("python3") ?: "not found"}"
         },
         ProcessDemo("Uptime via shell") {
-            shell("uptime").outputText()
+            Command.shell("uptime").output().stdoutText
         },
         ProcessDemo("Process info") {
             "pid=$$, isSuccess=${command("true").isSuccess()}"
@@ -76,7 +76,7 @@ fun ProcessDemoScreen(fileSystem: FileSystem) {
                 title = { Text("Process Execution API") },
                 navigationIcon = {
                     IconButton(onClick = {}) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(ArrowBack, contentDescription = "Back")
                     }
                 },
             )

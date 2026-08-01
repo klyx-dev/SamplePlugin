@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.klyx.api.data.file.KxFile
+import com.klyx.api.data.file.wrap
 import com.klyx.api.data.fs.Paths
 import java.io.File
 
@@ -37,7 +38,7 @@ fun EditorDemoScreen(fileName: String? = null) {
                     appendLine("  - title: Display name")
                     appendLine("  - id: Unique tab identifier")
                     appendLine()
-                    val f = KxFile(File(Paths.tempDir, "sample_demo.txt"))
+                    val f = File(Paths.tempDir, "sample_demo.txt")
                     f.writeText("This file was created by SamplePlugin!\nTime: ${System.currentTimeMillis()}")
                     appendLine("Created file at: ${f.absolutePath}")
                     appendLine("Content: ${f.readText()}")
