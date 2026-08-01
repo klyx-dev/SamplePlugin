@@ -1,13 +1,8 @@
 plugins {
-    alias(libs.plugins.android.application)
     alias(libs.plugins.klyx)
 }
 
 klyx {
-    // path to plugin.json
-    // default: <rootProject>/plugin.json
-    // pluginJsonFile.set(file("plugin.json"))
-
     // path to the plugin icon (PNG or JPG).
     // auto-detected if not set: root dir, case-insensitive match
     //   for "icon.png" or "icon.jpg"
@@ -36,12 +31,6 @@ klyx {
     // output folder for built .klyx bundles.
     // default: build/klyx/
     outputDirectory = rootProject.file("output")
-
-    // enables Jetpack Compose support:
-    //   1. Applies org.jetbrains.kotlin.plugin.compose compiler plugin
-    //   2. sets android.buildFeatures.compose = true
-    // This is REQUIRED if you use @Composable in your plugin.
-    enableCompose()
 }
 
 android {
@@ -62,7 +51,7 @@ android {
         }
     }
 
-    // klyx-gradle-plugin auto-configures:
+    // klyx-compiler-plugin auto-configures:
     //   defaultConfig.minSdk = 28
     //   compileOptions.sourceCompatibility = JavaVersion.VERSION_21
     //   compileOptions.targetCompatibility = JavaVersion.VERSION_21
