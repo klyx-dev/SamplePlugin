@@ -33,16 +33,5 @@ The generated `.klyx` archive contains:
 
 The `app/build.gradle.kts` file contains detailed comments explaining every property of the `klyx` extension and every task. Key configuration handled automatically by the plugin:
 
-- Applies `org.jetbrains.kotlin.plugin.serialization`
 - Sets `minSdk = 28` and Java 21 compatibility
 - Auto-detects `readme.md`, `changelog.md`, and `icon.png` / `icon.jpg` from the project root
-- `enableCompose()` enables Jetpack Compose and sets `buildFeatures.compose = true`
-
-## plugin.json
-
-The plugin descriptor uses all available fields:
-
-- id, name, version, minAppVersion, maxAppVersion, entryClass, description
-- author with name, email, url, github
-- links with source, issues, website, donate
-- permissions list
